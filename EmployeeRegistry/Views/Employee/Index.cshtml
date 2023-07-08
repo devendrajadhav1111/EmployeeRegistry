@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+   
+</head>
+
+<body>
+
+    @Html.Hidden("RedirectTo", Url.Action("Create", "Employee"))
+    <div class="row" style="margin-top:20px;">
+        <br />  <br />
+        <h4>Employees List</h4>
+        <br />
+        <br />  <br />
+        <table id="employeeTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#Id</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">State</th>
+                    <th scope="col">District</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    @section Scripts {
+        <script src="~/Scripts/Custom/get_employees.js"></script>
+    }
+</body>
+</html>

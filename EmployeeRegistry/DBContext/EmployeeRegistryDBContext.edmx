@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeRegistryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Districts">
+          <Key>
+            <PropertyRef Name="DistId" />
+          </Key>
+          <Property Name="DistId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeAge" Type="int" />
+          <Property Name="EmployeeAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="DistId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="StateDistMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="DistId" Type="int" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Employee__DistId__412EB0B6">
+          <End Role="Districts" Type="Self.Districts" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="DistId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__StateI__403A8C7D">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StateDist__DistI__3C69FB99">
+          <End Role="Districts" Type="Self.Districts" Multiplicity="0..1" />
+          <End Role="StateDistMapping" Type="Self.StateDistMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="DistId" />
+            </Principal>
+            <Dependent Role="StateDistMapping">
+              <PropertyRef Name="DistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StateDist__State__3B75D760">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="StateDistMapping" Type="Self.StateDistMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="StateDistMapping">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetDistrictsByStateId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StateId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="EmployeeRegistryModelStoreContainer">
+          <EntitySet Name="Districts" EntityType="Self.Districts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StateDistMapping" EntityType="Self.StateDistMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Employee__DistId__412EB0B6" Association="Self.FK__Employee__DistId__412EB0B6">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__StateI__403A8C7D" Association="Self.FK__Employee__StateI__403A8C7D">
+            <End Role="States" EntitySet="States" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StateDist__DistI__3C69FB99" Association="Self.FK__StateDist__DistI__3C69FB99">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="StateDistMapping" EntitySet="StateDistMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StateDist__State__3B75D760" Association="Self.FK__StateDist__State__3B75D760">
+            <End Role="States" EntitySet="States" />
+            <End Role="StateDistMapping" EntitySet="StateDistMapping" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeRegistryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistId" />
+          </Key>
+          <Property Name="DistId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__DistId__412EB0B6" FromRole="Districts" ToRole="Employee" />
+          <NavigationProperty Name="StateDistMappings" Relationship="Self.FK__StateDist__DistI__3C69FB99" FromRole="Districts" ToRole="StateDistMapping" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeAge" Type="Int32" />
+          <Property Name="EmployeeAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="DistId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="District" Relationship="Self.FK__Employee__DistId__412EB0B6" FromRole="Employee" ToRole="Districts" />
+          <NavigationProperty Name="State" Relationship="Self.FK__Employee__StateI__403A8C7D" FromRole="Employee" ToRole="States" />
+        </EntityType>
+        <EntityType Name="StateDistMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="DistId" Type="Int32" />
+          <NavigationProperty Name="District" Relationship="Self.FK__StateDist__DistI__3C69FB99" FromRole="StateDistMapping" ToRole="Districts" />
+          <NavigationProperty Name="State" Relationship="Self.FK__StateDist__State__3B75D760" FromRole="StateDistMapping" ToRole="States" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__StateI__403A8C7D" FromRole="States" ToRole="Employee" />
+          <NavigationProperty Name="StateDistMappings" Relationship="Self.FK__StateDist__State__3B75D760" FromRole="States" ToRole="StateDistMapping" />
+        </EntityType>
+        <Association Name="FK__Employee__DistId__412EB0B6">
+          <End Role="Districts" Type="Self.District" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="DistId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StateDist__DistI__3C69FB99">
+          <End Role="Districts" Type="Self.District" Multiplicity="0..1" />
+          <End Role="StateDistMapping" Type="Self.StateDistMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="DistId" />
+            </Principal>
+            <Dependent Role="StateDistMapping">
+              <PropertyRef Name="DistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__StateI__403A8C7D">
+          <End Role="States" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StateDist__State__3B75D760">
+          <End Role="States" Type="Self.State" Multiplicity="0..1" />
+          <End Role="StateDistMapping" Type="Self.StateDistMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="StateDistMapping">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeRegistryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="StateDistMappings" EntityType="Self.StateDistMapping" />
+          <EntitySet Name="States" EntityType="Self.State" />
+          <AssociationSet Name="FK__Employee__DistId__412EB0B6" Association="Self.FK__Employee__DistId__412EB0B6">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StateDist__DistI__3C69FB99" Association="Self.FK__StateDist__DistI__3C69FB99">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="StateDistMapping" EntitySet="StateDistMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__StateI__403A8C7D" Association="Self.FK__Employee__StateI__403A8C7D">
+            <End Role="States" EntitySet="States" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StateDist__State__3B75D760" Association="Self.FK__StateDist__State__3B75D760">
+            <End Role="States" EntitySet="States" />
+            <End Role="StateDistMapping" EntitySet="StateDistMappings" />
+          </AssociationSet>
+          <FunctionImport Name="GetDistrictsByStateId" ReturnType="Collection(EmployeeRegistryModel.GetDistrictsByStateId_Result)">
+            <Parameter Name="StateId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetDistrictsByStateId_Result">
+          <Property Type="Int32" Name="DistId" Nullable="false" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeRegistryModelStoreContainer" CdmEntityContainer="EmployeeRegistryEntities">
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="EmployeeRegistryModel.District">
+              <MappingFragment StoreEntitySet="Districts">
+                <ScalarProperty Name="DistId" ColumnName="DistId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EmployeeRegistryModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeAge" ColumnName="EmployeeAge" />
+                <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="DistId" ColumnName="DistId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StateDistMappings">
+            <EntityTypeMapping TypeName="EmployeeRegistryModel.StateDistMapping">
+              <MappingFragment StoreEntitySet="StateDistMapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="DistId" ColumnName="DistId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="EmployeeRegistryModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDistrictsByStateId" FunctionName="EmployeeRegistryModel.Store.GetDistrictsByStateId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeRegistryModel.GetDistrictsByStateId_Result">
+                <ScalarProperty Name="DistId" ColumnName="DistId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

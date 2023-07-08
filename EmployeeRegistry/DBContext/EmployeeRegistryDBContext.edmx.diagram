@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="89fc210628274653aa961e2284f54f2d" Name="Diagram1">
+        <EntityTypeShape EntityType="EmployeeRegistryModel.District" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeRegistryModel.Employee" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeRegistryModel.StateDistMapping" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeRegistryModel.State" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="EmployeeRegistryModel.FK__Employee__DistId__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeRegistryModel.FK__StateDist__DistI__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeRegistryModel.FK__Employee__StateI__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeRegistryModel.FK__StateDist__State__3B75D760" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
